@@ -42,29 +42,30 @@ func main() {
 	}
 
 	for _, sol := range solutions {
-		fmt.Println(validSolution(sol))
+		validateSolution(sol)
 	}
 }
 
-func validSolution(solution [][]int) (result bool) {
+func validateSolution(solution [][]int) {
 	for i, row := range solution {
 		isValidRow := validSequence(row)
 		if !isValidRow {
-			return false
+			fmt.Printf("Invalid - row %d\n", i+1)
+			return
 		}
 
 		isValidCol := validCol(i, solution)
 		if !isValidCol {
-			return false
+			return
 		}
 	}
 
 	hasValidGrids := validGrids(solution)
 	if !hasValidGrids {
-		return false
+		return
 	}
 
-	return true
+	fmt.Println("Valid :)")
 }
 
 func validGrids(solution [][]int) (valid bool) {
@@ -77,6 +78,7 @@ func validGrids(solution [][]int) (valid bool) {
 			}
 			isValidGrid := validSequence(grid)
 			if !isValidGrid {
+				fmt.Printf("Invalid - sub-grid (%d, %d)\n", (j/3)+1, (i/3)+1)
 				return false
 			}
 		}
@@ -89,7 +91,11 @@ func validCol(i int, solution [][]int) (valid bool) {
 	for j := range solution {
 		col = append(col, solution[j][i])
 	}
-	return validSequence(col)
+	isValidCol := validSequence(col)
+	if !isValidCol {
+		fmt.Printf("Invalid - column %d\n", i+1)
+	}
+	return isValidCol
 }
 
 func validSequence(array []int) (result bool) {
