@@ -57,7 +57,7 @@ def validate_solution(solution):
             grid = solution[i:i+3, j:j+3]
             shapedGrid = np.reshape(grid, (9,))
             if not (set(shapedGrid) == validSequence):
-                return f"Invalid - sub-grid {i / 3 + 1}, {j / 3 + 1}"
+                return f"Invalid - sub-grid {int(i / 3 + 1)}, {int(j / 3 + 1)}"
 
     return "Valid :)"
 
