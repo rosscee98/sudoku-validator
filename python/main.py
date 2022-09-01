@@ -36,7 +36,7 @@ input = [
     ]
 ]
 
-orderedList = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
+validSequence = set([1,2,3,4,5,6,7,8,9])
 
 def main():
     solutions = np.array(input)
@@ -45,20 +45,18 @@ def main():
 
 def validate_solution(solution):
     for i, row in enumerate(solution):
-        sortedRow = np.sort(row)
-        if not (np.array_equal(sortedRow, orderedList)):
+        if not (set(row) == validSequence):
             return f"Invalid - row {i+1}"
 
     for i, col in enumerate(solution.T):
-        sortedCol = np.sort(col)
-        if not (np.array_equal(sortedCol, orderedList)):
+        if not (set(col) == validSequence):
             return f"Invalid - col {i+1}"
 
     for i in range(0, 9, 3):
         for j in range(0, 9, 3):
             grid = solution[i:i+3, j:j+3]
-            sortedGrid = np.sort(np.reshape(grid, (9,)))
-            if not (np.array_equal(sortedGrid, orderedList)):
+            shapedGrid = np.reshape(grid, (9,))
+            if not (set(shapedGrid) == validSequence):
                 return f"Invalid - sub-grid {i / 3 + 1}, {j / 3 + 1}"
 
     return "Valid :)"
